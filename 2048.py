@@ -96,3 +96,51 @@ def display_help():
         print(f"Error displaying help: {e}")
         print("Press Enter to continue...")
         input()
+
+def main():
+    game = Game2048()
+    print("Loading game...")
+    time.sleep(1)  # Brief pause to ensure keyboard detection is ready
+    
+    # Show initial game state
+    game.display()
+    print("Use W/A/S/D to move, H for help, Q to quit")
+    
+    while True:
+        if game.is_game_over():
+            game.display()
+            print("Game Over! No more moves left.")
+            break
+        
+        # Real-time key detection
+        try:
+            if keyboard.is_pressed('w'):
+                game.move('w')
+                game.display()
+                time.sleep(0.2)  # Brief delay to avoid multiple moves per keypress
+            elif keyboard.is_pressed('a'):
+                game.move('a')
+                game.display()
+                time.sleep(0.2)
+            elif keyboard.is_pressed('s'):
+                game.move('s')
+                game.display()
+                time.sleep(0.2)
+            elif keyboard.is_pressed('d'):
+                game.move('d')
+                game.display()
+                time.sleep(0.2)
+            elif keyboard.is_pressed('h'):
+                display_help()
+                game.display()
+            elif keyboard.is_pressed('q'):
+                print("Thanks for playing!")
+                break
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Press Enter to continue...")
+            input()
+            game.display()
+
+if __name__ == "__main__":
+    main()
