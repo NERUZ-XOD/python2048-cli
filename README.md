@@ -1,18 +1,20 @@
 # Terminal-Based 2048 Game
 
-A command-line implementation of the popular 2048 puzzle game built with Python.
+A simple, cross-platform implementation of the popular 2048 game that runs in your terminal.
 
-## Description
+## Game Overview
 
-This is a terminal-based version of the classic 2048 game where you combine tiles with the same number to create a tile with the value 2048. The game is played on a 4x4 grid using keyboard controls.
+2048 is a puzzle game where you combine tiles with the same number to reach the tile with the value 2048. The game is played on a 4×4 grid, and with each move, a new tile randomly appears with a value of either 2 or 4.
+
+![2048 Game Screenshot](https://example.com/2048_screenshot.png)
 
 ## Features
 
-- Clean terminal interface
-- Real-time keyboard controls
-- Game state display after each move
-- In-game help menu
-- Customizable controls via config.py
+- Clean terminal-based interface
+- Score tracking
+- Customizable controls
+- Cross-platform compatibility (Windows, macOS, Linux)
+- Optimized display that only refreshes when necessary
 
 ## Requirements
 
@@ -32,6 +34,16 @@ This is a terminal-based version of the classic 2048 game where you combine tile
    pip install -r requirements.txt
    ```
 
+   **Note for Linux/macOS users**: You may need to run the installation with sudo if you're installing the keyboard module system-wide:
+   ```
+   sudo pip install -r requirements.txt
+   ```
+
+   **Alternative for Linux/macOS users**: If you encounter permission issues with the keyboard module, you can install in user mode:
+   ```
+   pip install --user -r requirements.txt
+   ```
+
 ## How to Play
 
 Run the game:
@@ -47,9 +59,19 @@ python 2048.py
 - **H**: Display help
 - **Q**: Quit game
 
-### Customizing Controls
+## Cross-Platform Compatibility
 
-You can customize the game controls and settings by editing the `config.py` file:
+This game is designed to work on Windows, macOS, and Linux:
+
+- **Windows**: Uses the keyboard module for real-time input, with msvcrt as a fallback
+- **macOS/Linux**: Uses the keyboard module with termios/tty as a fallback
+- **All Platforms**: Falls back to standard input (requiring Enter key after each move) if other methods aren't available
+
+The game automatically detects the best input method for your system.
+
+## Customization
+
+You can customize the game by editing the `config.py` file:
 
 ```python
 # Controls
@@ -70,7 +92,7 @@ CLEAR_COMMAND = 'cls' if __name__ == 'nt' else 'clear'  # Command to clear termi
 CELL_WIDTH = 4     # Width of each cell in the display
 ```
 
-### Rules
+## Rules
 1. Tiles with the same number merge when they collide
 2. After each move, a new tile (2 or 4) appears on the board
 3. The game ends when the board is full and no more moves are possible
@@ -78,8 +100,9 @@ CELL_WIDTH = 4     # Width of each cell in the display
 
 ## License
 
-This project is open source and available under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgements
+## Acknowledgments
 
-Inspired by the original 2048 game created by Gabriele Cirulli.
+- Inspired by the original 2048 game by Gabriele Cirulli
+- Built with Python and NumPy

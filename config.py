@@ -1,3 +1,5 @@
+import os
+
 # Game Configuration Settings
 
 # Controls
@@ -14,5 +16,5 @@ TILE_SPAWN_DELAY = 0.2  # Delay after move before spawning new tile
 MOVE_DELAY = 0.2   # Delay between moves to prevent multiple keypresses
 
 # Display Settings
-CLEAR_COMMAND = 'cls' if __name__ == 'nt' else 'clear'  # Command to clear terminal
+CLEAR_COMMAND = 'cls' if os.name == 'nt' else 'clear'  # Command to clear terminal
 CELL_WIDTH = 4     # Width of each cell in the display
