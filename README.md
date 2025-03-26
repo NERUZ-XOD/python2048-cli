@@ -6,7 +6,7 @@ A simple, cross-platform implementation of the popular 2048 game that runs in yo
 
 2048 is a puzzle game where you combine tiles with the same number to reach the tile with the value 2048. The game is played on a 4×4 grid, and with each move, a new tile randomly appears with a value of either 2 or 4.
 
-![2048 Game Screenshot](https://example.com/2048_screenshot.png)
+![2048 Game Screenshot](1.png),(2.png),(3.png),(4.png)
 
 ## Features
 
