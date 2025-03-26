@@ -57,3 +57,42 @@ class Game2048:
         # Spawn a new tile only if the grid has changed
         if not np.array_equal(original_grid, self.grid):
             self.spawn_tile()
+    def is_game_over(self):
+        if 0 in self.grid:
+            return False
+        for i in range(4):
+            for j in range(3):
+                if self.grid[i, j] == self.grid[i, j+1] or self.grid[j, i] == self.grid[j+1, i]:
+                    return False
+        return True
+    
+    def display(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("2048 Game")
+        print("Use W/A/S/D to move. Press Q to quit. Press H for help.")
+        print("---------------------")
+        for row in self.grid:
+            print('|'.join(f"{num:^4}" if num != 0 else "    " for num in row))
+            print("---------------------")
+
+def display_help():
+    try:
+        os.system('cls' if os.name == 'nt' else 'clear')  # Clear screen before showing help
+        print("\n=== 2048 GAME HELP ===\n")
+        print("OBJECTIVE: Combine tiles to reach 2048")
+        print("\nCONTROLS:")
+        print("  W - Move Up")
+        print("  A - Move Left")
+        print("  S - Move Down")
+        print("  D - Move Right")
+        print("  Q - Quit Game")
+        print("\nGAMEPLAY:")
+        print("- Tiles with the same number merge when they collide")
+        print("- A new 2 or 4 tile appears after each move")
+        print("- Game ends when the board is full and no moves are possible")
+        print("\nPress Enter to return to the game...")
+        input()
+    except Exception as e:
+        print(f"Error displaying help: {e}")
+        print("Press Enter to continue...")
+        input()
