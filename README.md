@@ -62,6 +62,12 @@ QUIT = 'q'         # Change to customize the quit key
 
 # Game Settings
 INITIAL_TILES = 2  # Number of tiles to spawn at game start
+TILE_SPAWN_DELAY = 0.2  # Delay after move before spawning new tile
+MOVE_DELAY = 0.2   # Delay between moves to prevent multiple keypresses
+
+# Display Settings
+CLEAR_COMMAND = 'cls' if __name__ == 'nt' else 'clear'  # Command to clear terminal
+CELL_WIDTH = 4     # Width of each cell in the display
 ```
 
 ### Rules
