@@ -3,12 +3,14 @@ import random
 import os
 import keyboard
 import time
+import config  # Import the config module
 
 class Game2048:
     def __init__(self):
         self.grid = np.zeros((4, 4), dtype=int)
-        self.spawn_tile()
-        self.spawn_tile()
+        # Use config for initial tiles
+        for _ in range(config.INITIAL_TILES):
+            self.spawn_tile()
     
     def spawn_tile(self):
         empty_cells = [(r, c) for r in range(4) for c in range(4) if self.grid[r, c] == 0]
@@ -30,26 +32,26 @@ class Game2048:
     
     def move(self, direction):
         original_grid = self.grid.copy()  # Save the original grid to check for changes
-        if direction == 'w':  # Up
+        if direction == config.MOVE_UP:  # Up
             self.grid = self.grid.T
             for i in range(4):
                 self.grid[i] = self.compress(self.grid[i])
                 self.grid[i] = self.merge(self.grid[i])
                 self.grid[i] = self.compress(self.grid[i])
             self.grid = self.grid.T
-        elif direction == 's':  # Down
+        elif direction == config.MOVE_DOWN:  # Down
             self.grid = self.grid.T
             for i in range(4):
                 self.grid[i] = self.compress(self.grid[i][::-1])[::-1]
                 self.grid[i] = self.merge(self.grid[i][::-1])[::-1]
                 self.grid[i] = self.compress(self.grid[i][::-1])[::-1]
             self.grid = self.grid.T
-        elif direction == 'a':  # Left
+        elif direction == config.MOVE_LEFT:  # Left
             for i in range(4):
                 self.grid[i] = self.compress(self.grid[i])
                 self.grid[i] = self.merge(self.grid[i])
                 self.grid[i] = self.compress(self.grid[i])
-        elif direction == 'd':  # Right
+        elif direction == config.MOVE_RIGHT:  # Right
             for i in range(4):
                 self.grid[i] = self.compress(self.grid[i][::-1])[::-1]
                 self.grid[i] = self.merge(self.grid[i][::-1])[::-1]
@@ -57,6 +59,7 @@ class Game2048:
         # Spawn a new tile only if the grid has changed
         if not np.array_equal(original_grid, self.grid):
             self.spawn_tile()
+            
     def is_game_over(self):
         if 0 in self.grid:
             return False
@@ -67,25 +70,25 @@ class Game2048:
         return True
     
     def display(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        os.system(config.CLEAR_COMMAND)
         print("2048 Game")
-        print("Use W/A/S/D to move. Press Q to quit. Press H for help.")
+        print(f"Use {config.MOVE_UP}/{config.MOVE_LEFT}/{config.MOVE_DOWN}/{config.MOVE_RIGHT} to move. Press {config.QUIT} to quit. Press {config.HELP} for help.")
         print("---------------------")
         for row in self.grid:
-            print('|'.join(f"{num:^4}" if num != 0 else "    " for num in row))
+            print('|'.join(f"{num:^{config.CELL_WIDTH}}" if num != 0 else " " * config.CELL_WIDTH for num in row))
             print("---------------------")
 
 def display_help():
     try:
-        os.system('cls' if os.name == 'nt' else 'clear')  # Clear screen before showing help
+        os.system(config.CLEAR_COMMAND)  # Clear screen before showing help
         print("\n=== 2048 GAME HELP ===\n")
         print("OBJECTIVE: Combine tiles to reach 2048")
         print("\nCONTROLS:")
-        print("  W - Move Up")
-        print("  A - Move Left")
-        print("  S - Move Down")
-        print("  D - Move Right")
-        print("  Q - Quit Game")
+        print(f"  {config.MOVE_UP.upper()} - Move Up")
+        print(f"  {config.MOVE_LEFT.upper()} - Move Left")
+        print(f"  {config.MOVE_DOWN.upper()} - Move Down")
+        print(f"  {config.MOVE_RIGHT.upper()} - Move Right")
+        print(f"  {config.QUIT.upper()} - Quit Game")
         print("\nGAMEPLAY:")
         print("- Tiles with the same number merge when they collide")
         print("- A new 2 or 4 tile appears after each move")
@@ -104,7 +107,7 @@ def main():
     
     # Show initial game state
     game.display()
-    print("Use W/A/S/D to move, H for help, Q to quit")
+    print(f"Use {config.MOVE_UP}/{config.MOVE_LEFT}/{config.MOVE_DOWN}/{config.MOVE_RIGHT} to move, {config.HELP} for help, {config.QUIT} to quit")
     
     while True:
         if game.is_game_over():
@@ -114,26 +117,26 @@ def main():
         
         # Real-time key detection
         try:
-            if keyboard.is_pressed('w'):
-                game.move('w')
+            if keyboard.is_pressed(config.MOVE_UP):
+                game.move(config.MOVE_UP)
                 game.display()
-                time.sleep(0.2)  # Brief delay to avoid multiple moves per keypress
-            elif keyboard.is_pressed('a'):
-                game.move('a')
+                time.sleep(config.MOVE_DELAY)  # Brief delay to avoid multiple moves per keypress
+            elif keyboard.is_pressed(config.MOVE_LEFT):
+                game.move(config.MOVE_LEFT)
                 game.display()
-                time.sleep(0.2)
-            elif keyboard.is_pressed('s'):
-                game.move('s')
+                time.sleep(config.MOVE_DELAY)
+            elif keyboard.is_pressed(config.MOVE_DOWN):
+                game.move(config.MOVE_DOWN)
                 game.display()
-                time.sleep(0.2)
-            elif keyboard.is_pressed('d'):
-                game.move('d')
+                time.sleep(config.MOVE_DELAY)
+            elif keyboard.is_pressed(config.MOVE_RIGHT):
+                game.move(config.MOVE_RIGHT)
                 game.display()
-                time.sleep(0.2)
-            elif keyboard.is_pressed('h'):
+                time.sleep(config.MOVE_DELAY)
+            elif keyboard.is_pressed(config.HELP):
                 display_help()
                 game.display()
-            elif keyboard.is_pressed('q'):
+            elif keyboard.is_pressed(config.QUIT):
                 print("Thanks for playing!")
                 break
         except Exception as e:
