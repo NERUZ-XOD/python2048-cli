@@ -138,15 +138,15 @@ def get_key_windows():
 
 def get_key_unix():
     """Get a single keypress from the user (Unix-specific)"""
-    if UNIX_SPECIAL_CHARS:
-        if select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], []):
-            old_settings = termios.tcgetattr(sys.stdin)
+    if UNIX_SPECIAL_CHARS: # type: ignore
+        if select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], []): # type: ignore
+            old_settings = termios.tcgetattr(sys.stdin) # type: ignore
             try:
-                tty.setcbreak(sys.stdin.fileno())
+                tty.setcbreak(sys.stdin.fileno()) # type: ignore
                 key = sys.stdin.read(1)
                 return key.lower()
             finally:
-                termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
+                termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings) # type: ignore
     return None
 
 def get_key():
