@@ -28,8 +28,8 @@ A simple, cross-platform implementation of the popular 2048 game that runs in yo
 
 1. Clone this repository:
    ```
-   git clone https://github.com/NERUZ-XOD/terminal_based_2048_game.git
-   cd terminal_based_2048_game
+   git clone https://github.com/NERUZ-XOD/python2048-cli.git
+   cd python2048-cli
    ```
 
 2. Install the required packages:
